@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_store/controller/methods.dart';
+import 'package:my_store/screens/product_desc_screen.dart';
 import 'package:my_store/utilities/color_converter.dart';
 import '../components/product_card.dart';
 import '../models/products.dart';
 import '../utilities/screen_utils.dart';
 
-
 class ProductsScreen extends StatefulWidget {
-
-  const ProductsScreen({super.key});
+  final Function(bool) updateNavBarVisibility;
+  const ProductsScreen({super.key, required this.updateNavBarVisibility});
 
   @override
   State<ProductsScreen> createState() => _ProductsScreenState();
@@ -44,9 +44,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
     setState(() {
       filteredProducts = filteredProducts?.where((product) {
-        final nameMatch = product.title!.toLowerCase().contains(query.toLowerCase());
-        final categoryMatch = product.category!.toLowerCase().contains(query.toLowerCase());
-        final brandMatch = product.brand!.toLowerCase().contains(query.toLowerCase());
+        final nameMatch =
+            product.title!.toLowerCase().contains(query.toLowerCase());
+        final categoryMatch =
+            product.category!.toLowerCase().contains(query.toLowerCase());
+        final brandMatch =
+            product.brand!.toLowerCase().contains(query.toLowerCase());
         return nameMatch || categoryMatch || brandMatch;
       }).toList();
     });
@@ -60,7 +63,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
       appBar: AppBar(
         title: Text(
           "Products",
-          style: GoogleFonts.poppins( // Updated font to Poppins
+          style: GoogleFonts.playfairDisplay(
+            // Updated font to Poppins
             fontWeight: FontWeight.w600,
             fontSize: 24,
           ),
@@ -134,7 +138,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                         style: const TextStyle(color: Colors.red),
                       ),
                     );
-                  } else if (filteredProducts == null || filteredProducts!.isEmpty) {
+                  } else if (filteredProducts == null ||
+                      filteredProducts!.isEmpty) {
                     return const Center(
                       child: Text(
                         "No products found.",
@@ -156,7 +161,19 @@ class _ProductsScreenState extends State<ProductsScreen> {
                               ? screenSize.height * 0.04
                               : screenSize.height * 0.02,
                         ),
-                        child: ProductCard(product: product),
+                        child: ProductCard(
+                          product: product,
+                          onTap: () {
+                            widget.updateNavBarVisibility(false);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ProductDescScreen(product: product))).then((_) {
+                              widget.updateNavBarVisibility(true); // Show nav bar when back
+                            });
+                          },
+                        ),
                       );
                     },
                   );

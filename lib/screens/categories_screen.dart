@@ -59,7 +59,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       appBar: AppBar(
         title: Text(
           "Categories",
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.playfairDisplay(
             fontWeight: FontWeight.w600,
             fontSize: 24,
           ),

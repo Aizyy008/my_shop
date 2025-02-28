@@ -23,7 +23,7 @@ class _AccountScreenState extends State<AccountScreen> {
       appBar: AppBar(
         title: Text(
           "Mitt konto",
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.playfairDisplay(
             fontWeight: FontWeight.w600,
             fontSize: 24,
           ),

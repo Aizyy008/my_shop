@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:my_store/screens/product_desc_screen.dart";
 
 import "../components/category_product_card.dart";
 import "../components/product_card.dart";
@@ -62,7 +63,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       appBar: AppBar(
         title: Text(
           widget.categoryTitle,
-          style: GoogleFonts.poppins( // Updated font to Poppins
+          style: GoogleFonts.playfairDisplay( // Updated font to Poppins
             fontWeight: FontWeight.w600,
             fontSize: 24,
           ),
@@ -158,7 +159,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               ? screenSize.height * 0.04
                               : screenSize.height * 0.02,
                         ),
-                        child: CategoryProductCard(product: product),
+                        child: CategoryProductCard(product: product, onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDescScreen(product: product)));
+                        },),
                       );
                     },
                   );

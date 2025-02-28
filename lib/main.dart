@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:my_store/providers/wishlist_provider.dart';
+import 'package:my_store/utilities/color_converter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:my_store/screens/account_screen.dart';
 import 'package:my_store/screens/categories_screen.dart';
 import 'package:my_store/screens/favorites_screen.dart';
 import 'package:my_store/screens/products_screen.dart';
 import 'package:my_store/screens/splash_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+providers: [
+  ChangeNotifierProvider(create: (_) => WishlistProvider())
+],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   List<Widget> _buildScreens() {
     return [
-      const ProductsScreen(),
+      ProductsScreen(updateNavBarVisibility: _updateNavBarVisibility),
       CategoriesScreen(updateNavBarVisibility: _updateNavBarVisibility),
       const FavoritesScreen(),
       const AccountScreen(),
@@ -56,27 +64,42 @@ class _HomeScreenState extends State<HomeScreen> {
       PersistentBottomNavBarItem(
         icon: const Padding(
           padding: EdgeInsets.only(top: 8.0), // Adding top padding
-          child: Icon(Icons.shopping_bag),
+          child: Icon(Icons.shopping_bag_outlined),
         ),
         title: "Products",
+        textStyle: GoogleFonts.poppins(
+          fontSize: 10,
+          fontWeight: FontWeight.w400,
+          color: ColorConverter.fromHex("#F2F2F2")
+        ),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.white,
       ),
       PersistentBottomNavBarItem(
         icon: const Padding(
           padding: EdgeInsets.only(top: 8.0), // Adding top padding
-          child: Icon(Icons.category),
+          child: Icon(Icons.category_outlined),
         ),
         title: "Categories",
+        textStyle: GoogleFonts.poppins(
+            fontSize: 10,
+            fontWeight: FontWeight.w400,
+            color: ColorConverter.fromHex("#F2F2F2")
+        ),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.white,
       ),
       PersistentBottomNavBarItem(
         icon: const Padding(
           padding: EdgeInsets.only(top: 8.0), // Adding top padding
-          child: Icon(Icons.favorite_border),
+          child: Icon(Icons.favorite_border_outlined),
         ),
         title: "Favorites",
+        textStyle: GoogleFonts.poppins(
+            fontSize: 10,
+            fontWeight: FontWeight.w400,
+            color: ColorConverter.fromHex("#F2F2F2")
+        ),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.white,
       ),
@@ -86,6 +109,11 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Icon(Icons.person_outline_sharp),
         ),
         title: "Account",
+        textStyle: GoogleFonts.poppins(
+            fontSize: 10,
+            fontWeight: FontWeight.w400,
+            color: ColorConverter.fromHex("#F2F2F2")
+        ),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.white,
       ),
